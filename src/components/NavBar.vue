@@ -1,11 +1,13 @@
 <template>
   <q-item
+  class="text-white"
     clickable
     tag="a"
     target="_blank"
     :href="props.link"
   >
     <q-item-section
+    class="text-white"
       v-if="props.icon"
       avatar
     >
@@ -14,7 +16,6 @@
 
     <q-item-section>
       <q-item-label>{{ props.title }}</q-item-label>
-      <q-item-label caption>{{ props.caption }}</q-item-label>
     </q-item-section>
   </q-item>
 </template>
@@ -28,11 +29,6 @@ const props = defineProps({
   title: {
     type: String,
     required: true
-  },
-
-  caption: {
-    type: String,
-    default: ''
   },
 
   link: {
