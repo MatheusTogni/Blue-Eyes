@@ -26,6 +26,8 @@
       class="bg-primary"
       show-if-above
       bordered
+      :width="200"
+      :breakpoint="767"
     >
       <q-list>
         <q-item-label
@@ -61,12 +63,12 @@ const navBar = [
   {
     title: 'Gastos',
     icon: 'paid ',
-    link: '/settings'
+    link: '/entries'
   },
   {
     title: 'Configurações',
     icon: 'settings',
-    link: 'https://github.com/quasarframework'
+    link: '/settings'
   }
 ]
 
