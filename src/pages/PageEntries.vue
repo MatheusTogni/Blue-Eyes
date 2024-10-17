@@ -14,8 +14,19 @@
         </q-item>
       </q-list>
     </div>
-    <q-footer>
-      <div class="row q-pa-sm q-col-gutter-sm">
+    <q-footer
+    class="bg-transparent">
+      <div class="row q-mb-sm q-px-md q-py-sm shadow-up-3">
+        <div class="col text-grey-7 text-h6">
+        Total:
+        </div>
+        <div 
+        :class="usoQuantidadeClasseCor(total)"
+        class="col text-h6 text-right">
+          {{ usoCifrao(total) }}
+        </div>
+      </div>
+      <div class="row q-px-sm q-pb-sm q-col-gutter-sm bg-primary">
         <div class="col">
           <q-input dense outlined bg-color="white" placeholder="Nome" />
         </div>
@@ -32,7 +43,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import { usoCifrao } from "src/uso/usoCifrao"
 import { usoQuantidadeClasseCor } from "src/uso/usoQuantidadeClasseCor";
 
@@ -54,8 +65,17 @@ const entradas = ref([
   },
   {
     id: "id4",
-    nome: "    Nesconhecido",
+    nome: "Desconhecido",
     quantidade: 0,
   },
-]);
+])
+
+const total = computed(() => {
+  let total = 0
+  entradas.value.forEach(entrada => {
+    total = total + entrada.quantidade
+  })
+  return total
+})
 </script>
+
