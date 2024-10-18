@@ -14,36 +14,34 @@
         </q-item>
       </q-list>
     </div>
-    <q-footer
-    class="bg-transparent">
+    <q-footer class="bg-transparent">
       <div class="row q-mb-sm q-px-md q-py-sm shadow-up-3">
         <div class="col text-grey-7 text-h6">
-        Total:
+          Total:
         </div>
-        <div 
-        :class="usoQuantidadeClasseCor(total)"
-        class="col text-h6 text-right">
+        <div :class="usoQuantidadeClasseCor(total)" class="col text-h6 text-right">
           {{ usoCifrao(total) }}
         </div>
       </div>
-      <div class="row q-px-sm q-pb-sm q-col-gutter-sm bg-primary">
+      <q-form @submit="addEntrada" class="row q-px-sm q-pb-sm q-col-gutter-sm bg-primary">
         <div class="col">
-          <q-input dense outlined bg-color="white" placeholder="Nome" />
+          <q-input v-model="adicionarEntradaForm.nome" dense outlined bg-color="white" placeholder="Nome" />
         </div>
         <div class="col">
-          <q-input input-class="text-right" placeholder="Quantidade" bg-color="white" type="number" step="0.01" outlined
-            dense />
+          <q-input v-model.number="adicionarEntradaForm.quantidade" input-class="text-right" placeholder="Quantidade"
+            bg-color="white" type="number" step="0.01" outlined dense />
         </div>
         <div class="col col-auto">
-          <q-btn color="primary" icon="add" round></q-btn>
+          <q-btn color="primary" type="submit" icon="add" round></q-btn>
         </div>
-      </div>
+      </q-form>
     </q-footer>
   </q-page>
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
+import { uid } from "quasar";
 import { usoCifrao } from "src/uso/usoCifrao"
 import { usoQuantidadeClasseCor } from "src/uso/usoQuantidadeClasseCor";
 
@@ -77,5 +75,24 @@ const total = computed(() => {
   })
   return total
 })
-</script>
 
+const adicionarFormDefault = {
+  nome: '',
+  quantidade: null
+}
+
+const adicionarEntradaForm = reactive({
+  ...adicionarFormDefault
+})
+
+const adicionarFormReset = () => {
+  Object.assign(adicionarEntradaForm, )
+}
+
+const addEntrada = () => {
+ const novaEntrada = Object.assign({}, adicionarEntradaForm, { id: uid() })
+  entradas.value.push(novaEntrada)
+  adicionarFormReset()
+}
+
+</script>
