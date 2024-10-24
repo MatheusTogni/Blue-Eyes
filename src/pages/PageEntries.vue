@@ -11,7 +11,7 @@
           <q-item-section class="text-weight-bold" side :class="usoQuantidadeClasseCor(entrada.quantidade)">
             {{ usoCifrao(entrada.quantidade) }}
           </q-item-section>
-        </q-item>
+        </q-item> 
       </q-list>
     </div>
     <q-footer class="bg-transparent">
@@ -25,7 +25,7 @@
       </div>
       <q-form @submit="addEntrada" class="row q-px-sm q-pb-sm q-col-gutter-sm bg-primary">
         <div class="col">
-          <q-input v-model="adicionarEntradaForm.nome" dense outlined bg-color="white" placeholder="Nome" />
+          <q-input v-model="adicionarEntradaForm.nome" ref="nomeRef"dense outlined bg-color="white" placeholder="Nome" />
         </div>
         <div class="col">
           <q-input v-model.number="adicionarEntradaForm.quantidade" input-class="text-right" placeholder="Quantidade"
@@ -76,6 +76,8 @@ const total = computed(() => {
   return total
 })
 
+const nomeRef = ref(null)
+
 const adicionarFormDefault = {
   nome: '',
   quantidade: null
@@ -86,7 +88,9 @@ const adicionarEntradaForm = reactive({
 })
 
 const adicionarFormReset = () => {
-  Object.assign(adicionarEntradaForm, )
+  adicionarEntradaForm.nome = ''
+  adicionarEntradaForm.quantidade = null
+  nomeRef.value.focus()
 }
 
 const addEntrada = () => {
