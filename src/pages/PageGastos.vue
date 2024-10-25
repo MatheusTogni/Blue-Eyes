@@ -2,16 +2,29 @@
   <q-page>
     <div class="q-pa-md">
       <q-list bordered separator>
+        <q-slide-item v-for="entrada in entradas" :key="entrada.id" @left="onLeft" @right="onRight($event, entrada.id)"
+          left-color="positive" right-color="negative">
+          <template v-slot:left>
+            <q-icon name="done" />
+          </template>
+          <template v-slot:right>
+            <q-icon name="delete" />
+          </template>
 
-        <q-item v-for="entrada in entradas" :key="entrada.id">
-          <q-item-section class="text-weight-bold" :class="usoQuantidadeClasseCor(entrada.quantidade)">
-            {{ entrada.nome }}
-          </q-item-section>
 
-          <q-item-section class="text-weight-bold" side :class="usoQuantidadeClasseCor(entrada.quantidade)">
-            {{ usoCifrao(entrada.quantidade) }}
-          </q-item-section>
-        </q-item> 
+
+          <q-item>
+            <q-item-section class="text-weight-bold" :class="usoQuantidadeClasseCor(entrada.quantidade)">
+              {{ entrada.nome }}
+            </q-item-section>
+
+            <q-item-section class="text-weight-bold" side :class="usoQuantidadeClasseCor(entrada.quantidade)">
+              {{ usoCifrao(entrada.quantidade) }}
+            </q-item-section>
+          </q-item>
+
+        </q-slide-item>
+
       </q-list>
     </div>
     <q-footer class="bg-transparent">
@@ -25,7 +38,8 @@
       </div>
       <q-form @submit="addEntrada" class="row q-px-sm q-pb-sm q-col-gutter-sm bg-primary">
         <div class="col">
-          <q-input v-model="adicionarEntradaForm.nome" ref="nomeRef"dense outlined bg-color="white" placeholder="Nome" />
+          <q-input v-model="adicionarEntradaForm.nome" ref="nomeRef" dense outlined bg-color="white"
+            placeholder="Nome" />
         </div>
         <div class="col">
           <q-input v-model.number="adicionarEntradaForm.quantidade" input-class="text-right" placeholder="Quantidade"
@@ -41,9 +55,11 @@
 
 <script setup>
 import { ref, computed, reactive } from "vue";
-import { uid } from "quasar";
+import { colors, uid, useQuasar } from "quasar";
 import { usoCifrao } from "src/uso/usoCifrao"
 import { usoQuantidadeClasseCor } from "src/uso/usoQuantidadeClasseCor";
+
+const $q = useQuasar()
 
 const entradas = ref([
   {
@@ -94,9 +110,33 @@ const adicionarFormReset = () => {
 }
 
 const addEntrada = () => {
- const novaEntrada = Object.assign({}, adicionarEntradaForm, { id: uid() })
+  const novaEntrada = Object.assign({}, adicionarEntradaForm, { id: uid() })
   entradas.value.push(novaEntrada)
   adicionarFormReset()
 }
 
+const onRight = ({ reset }, entradaId) => {
+  $q.dialog({
+    title: 'Deletar Entrada',
+    message: 'Você gostaria de deletar essa entrada?',
+    cancel: true,
+    persistent: true,
+    ok: {
+      label: 'Delete',
+      color: 'negative',
+    },
+    cancel: {
+      color: 'primary',
+    }
+  }).onOk(() => {
+    deletarEntrada(entradaId)
+  }).onCancel(() => {
+    reset()
+  })
+}
+
+  const deletarEntrada = entradaId => {
+     const index = entradas.value.findIndex(entrada => entrada.id === entradaId)
+     entradas.value.splice(index, 1)
+  }
 </script>
