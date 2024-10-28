@@ -2,11 +2,8 @@
   <q-page>
     <div class="q-pa-md">
       <q-list bordered separator>
-        <q-slide-item v-for="entrada in entradas" :key="entrada.id" @left="onLeft" @right="onRight($event, entrada.id)"
+        <q-slide-item v-for="entrada in entradas" :key="entrada.id"@right="onRight($event, entrada.id)"
           left-color="positive" right-color="negative">
-          <template v-slot:left>
-            <q-icon name="done" />
-          </template>
           <template v-slot:right>
             <q-icon name="delete" />
           </template>
@@ -122,10 +119,11 @@ const onRight = ({ reset }, entradaId) => {
     cancel: true,
     persistent: true,
     ok: {
-      label: 'Delete',
+      label: 'Deletar',
       color: 'negative',
     },
     cancel: {
+      label: 'Cancelar',
       color: 'primary',
     }
   }).onOk(() => {
@@ -138,5 +136,11 @@ const onRight = ({ reset }, entradaId) => {
   const deletarEntrada = entradaId => {
      const index = entradas.value.findIndex(entrada => entrada.id === entradaId)
      entradas.value.splice(index, 1)
+     $q.notify({
+      message:'Entrada Deletada',
+      position: "top-right",
+      type: 'positive',
+      multiLine: true})
   }
 </script>
+i
