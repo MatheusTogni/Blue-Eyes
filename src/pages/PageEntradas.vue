@@ -1,7 +1,8 @@
 <template>
   <q-page>
     <div class="q-pa-md">
-      <q-list bordered separator>
+      <NadaAqui v-if="!storeEntradas.entradas.length"/>
+      <q-list v-else bordered separator>
         <Entrada v-for="entrada in storeEntradas.entradas" :key="entrada.id" :entrada="entrada"/>
       </q-list>
     </div>
@@ -17,6 +18,7 @@ import { useStoreEntradas } from "src/stores/storeEntradas";
 import Total from "src/components/Total.vue"
 import AddEntrada from "src/components/AddEntrada.vue";
 import Entrada from "src/components/Entrada.vue";
+import NadaAqui from "src/components/NadaAqui.vue";
 
 const storeEntradas = useStoreEntradas()
 </script>
