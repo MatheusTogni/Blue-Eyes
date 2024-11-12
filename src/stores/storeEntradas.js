@@ -35,5 +35,12 @@ export const useStoreEntradas = defineStore("entradas", () => {
     }
   };
 
-  return { entradas, total, addEntrada, deletarEntrada };
+  const updateEntrada = (entradaId, updates) => {
+    const index = entradas.value.findIndex(
+      (entrada) => entrada.id === 
+    entradaId)
+    Object.assign(entradas.value[index], updates);
+  };
+
+  return { entradas, total, addEntrada, deletarEntrada, updateEntrada };
 });
