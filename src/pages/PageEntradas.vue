@@ -2,7 +2,7 @@
   <q-page>
     <div class="q-pa-md">
       <q-list bordered separator>
-        <Entrada v-for="entrada in storeEntradas.entradas" :key="entrada.id" />
+        <Entrada v-for="entrada in storeEntradas.entradas" :key="entrada.id" :entrada="entrada"/>
       </q-list>
     </div>
     <q-footer class="bg-transparent">
@@ -13,7 +13,10 @@
 </template>
 
 <script setup>
+import { useStoreEntradas } from "src/stores/storeEntradas";
 import Total from "src/components/Total.vue"
 import AddEntrada from "src/components/AddEntrada.vue";
 import Entrada from "src/components/Entrada.vue";
+
+const storeEntradas = useStoreEntradas()
 </script>

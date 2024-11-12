@@ -1,6 +1,7 @@
 <template>
-    <q-slide-item @right="onRight($event, entrada)"
-        right-color="negative">
+    <q-slide-item @right="onRight" left-color="positive" right-color="negative">
+
+
         <template v-slot:right>
             <q-icon name="delete" />
         </template>
@@ -15,7 +16,6 @@
             </q-item-section>
         </q-item>
     </q-slide-item>
-
 </template>
 
 <script setup>
@@ -27,12 +27,19 @@ import { usoQuantidadeClasseCor } from "src/uso/usoQuantidadeClasseCor";
 const storeEntradas = useStoreEntradas()
 const $q = useQuasar()
 
-const onRight = ({ reset }, entrada) => {
+const props = defineProps({
+    entrada: {
+        type: Object,
+        required: true
+    }
+})
+
+const onRight = ({ reset }) => {
     $q.dialog({
         title: 'Deletar Entrada',
         message: `Você gostaria de deletar essa entrada?
-    <div class="q-mt-md text-weight-bold ${usoQuantidadeClasseCor(entrada.quantidade)}">
-      ${entrada.nome} : ${usoCifrao(entrada.quantidade)}
+    <div class="q-mt-md text-weight-bold ${usoQuantidadeClasseCor(props.entrada.quantidade)}">
+      ${props.entrada.nome} : ${usoCifrao(props.entrada.quantidade)}
       </div>
       `,
         cancel: true,
@@ -47,7 +54,7 @@ const onRight = ({ reset }, entrada) => {
             color: 'primary',
         }
     }).onOk(() => {
-        storeEntradas.deletarEntrada(entrada.id)
+        storeEntradas.deletarEntrada(props.entrada.id)
     }).onCancel(() => {
         reset()
     })
