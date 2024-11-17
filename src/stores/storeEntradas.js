@@ -4,10 +4,10 @@ import { uid, Notify } from "quasar";
 
 export const useStoreEntradas = defineStore("entradas", () => {
   const entradas = ref([
-    { id: "id1", nome: "Salário", quantidade: 3000 },
-    { id: "id2", nome: "Aluguel", quantidade: -499 },
-    { id: "id3", nome: "Celular", quantidade: -250 },
-    { id: "id4", nome: "Desconhecido", quantidade: 0 },
+    { id: "id1", nome: "Salário", quantidade: 3000, pago: false },
+    { id: "id2", nome: "Aluguel", quantidade: -499, pago: false },
+    { id: "id3", nome: "Celular", quantidade: -250, pago: false },
+    { id: "id4", nome: "Desconhecido", quantidade: 0, pago: false },
   ]);
 
   const total = computed(() => {
@@ -16,8 +16,14 @@ export const useStoreEntradas = defineStore("entradas", () => {
     }, 0);
   });
 
+  const totalPago = computed(() => {
+    return entradas.value.reduce((accumulator, { quantidade, pago }) => {
+      return pago ? accumulator + quantidade : accumulator
+    }, 0);
+  });
+
   const addEntrada = (adicionarEntradaForm) => {
-    const novaEntrada = Object.assign({}, adicionarEntradaForm, { id: uid() });
+    const novaEntrada = Object.assign({}, adicionarEntradaForm, { id: uid(), pago: false });
     entradas.value.push(novaEntrada);
   };
 
@@ -42,5 +48,5 @@ export const useStoreEntradas = defineStore("entradas", () => {
     Object.assign(entradas.value[index], updates);
   };
 
-  return { entradas, total, addEntrada, deletarEntrada, updateEntrada };
+  return { entradas, total, totalPago, addEntrada, deletarEntrada, updateEntrada };
 });

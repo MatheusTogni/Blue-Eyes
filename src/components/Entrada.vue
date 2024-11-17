@@ -1,13 +1,16 @@
 <template>
-    <q-slide-item @right="onRight" left-color="positive" right-color="negative">
+    <q-slide-item @left="onLeft" @right="onRight" left-color="positive" right-color="negative"
+        :class="{ 'bg-grey-2 ': entrada.pago }">
 
-
+        <template v-slot:left>
+            <q-icon name='done' />
+        </template>
         <template v-slot:right>
             <q-icon name="delete" />
         </template>
 
         <q-item>
-            <q-item-section class="text-weight-bold" :class="usoQuantidadeClasseCor(entrada.quantidade)">
+            <q-item-section class="text-weight-bold" :class="[usoQuantidadeClasseCor(entrada.quantidade), { 'text-strike' : entrada.pago }]">
                 {{ entrada.nome }}
                 <q-popup-edit @save="onNomeUpdate" :model-value="entrada.nome" v-slot="scope" :cover="false"
                     :offset="[16, 12]" anchor="top left" auto-save buttons label-set="Ok" label-cancel="Cancelar">
@@ -16,7 +19,7 @@
                 </q-popup-edit>
             </q-item-section>
 
-            <q-item-section class="text-weight-bold" side :class="usoQuantidadeClasseCor(entrada.quantidade)">
+            <q-item-section class="text-weight-bold" side :class="[usoQuantidadeClasseCor(entrada.quantidade), { 'text-strike' : entrada.pago }]">
                 {{ usoCifrao(entrada.quantidade) }}
                 <q-popup-edit @save="onQuantidadeUpdate" :model-value="entrada.quantidade" v-slot="scope" :cover="false"
                     :offset="[16, 12]" anchor="top left" auto-save buttons label-set="Ok" label-cancel="Cancelar">
@@ -45,6 +48,11 @@ const props = defineProps({
     }
 })
 
+const onLeft = ({ reset }) => {
+    storeEntradas.updateEntrada(props.entrada.id, { pago: !props.entrada.pago })
+    reset()
+}
+
 const onRight = ({ reset }) => {
     $q.dialog({
         title: 'Deletar Entrada',
@@ -72,7 +80,7 @@ const onRight = ({ reset }) => {
 }
 
 const onNomeUpdate = value => {
-    storeEntradas.updateEntrada(props.entrada.id, { nome: value})
+    storeEntradas.updateEntrada(props.entrada.id, { nome: value })
 }
 
 const onQuantidadeUpdate = value => {
