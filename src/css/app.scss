@@ -17,3 +17,15 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     margin-left:10px
 }
+
+.entradas {
+    .q-slide-item {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+        &:not(:first-child) {
+            margin-top: -1px;
+        }
+    }
+    .sortable-ghost {
+        opacity: 0;
+    }
+}

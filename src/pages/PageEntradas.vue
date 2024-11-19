@@ -2,10 +2,11 @@
   <q-page>
     <div class="q-pa-md">
       <NadaAqui v-if="!storeEntradas.entradas.length" />
-      <q-list v-else bordered separator>
+      <q-list v-else class="entradas">
 
-        <Sortable :list="storeEntradas.entradas" item-key="id" tag="div">
-          <template #item="{element, index}">
+        <Sortable @end="storeEntradas.sortEnd" :list="storeEntradas.entradas" :options="{ handle: '.handle' }"
+          item-key="id" tag="div">
+          <template #item="{ element, index }">
             <Entrada :key="element.id" :entrada="element" />
           </template>
         </Sortable>
@@ -14,7 +15,9 @@
       </q-list>
     </div>
     <q-footer class="bg-transparent">
-      <Total />
+      <transition appear enter-active-class="animated fadeInUp" leave-active-class="animated fadeOutDown">
+        <Total v-if="storeEntradas.entradas.length" />
+      </transition>
       <AddEntrada />
     </q-footer>
   </q-page>

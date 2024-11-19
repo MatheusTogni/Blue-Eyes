@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ref, computed } from "vue";
+import { ref, computed, reactive } from "vue";
 import { uid, Notify } from "quasar";
 
 export const useStoreEntradas = defineStore("entradas", () => {
@@ -9,6 +9,10 @@ export const useStoreEntradas = defineStore("entradas", () => {
     { id: "id3", nome: "Celular", quantidade: -250, pago: false },
     { id: "id4", nome: "Desconhecido", quantidade: 0, pago: false },
   ]);
+
+  const opcoes = reactive({
+    sort: false
+  })
 
   const total = computed(() => {
     return entradas.value.reduce((accumulator, { quantidade }) => {
@@ -48,5 +52,11 @@ export const useStoreEntradas = defineStore("entradas", () => {
     Object.assign(entradas.value[index], updates);
   };
 
-  return { entradas, total, totalPago, addEntrada, deletarEntrada, updateEntrada };
+  const sortEnd = ({ velhoIndex, novoIndex}) => {
+    const entradaMovida = entradas.value[velhoIndex]
+    entradas.value.splice(velhoIndex, 1)
+    entradas.value.splice(novoIndex, 0, entradaMovida)
+  }
+
+  return { entradas, opcoes, total, totalPago, addEntrada, deletarEntrada, updateEntrada, sortEnd };
 });

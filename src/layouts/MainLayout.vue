@@ -18,6 +18,14 @@
         </div>
         </q-toolbar-title>
       
+        <q-btn 
+        v-if="$route.fullPath === '/entries'"
+        @click="storeEntradas.opcoes.sort = !storeEntradas.opcoes.sort"
+        :label="!storeEntradas.opcoes.sort ? 'Organizar' : 'Feito'"
+        flat
+        dense
+        />
+
       </q-toolbar>
     </q-header>
 
@@ -53,11 +61,14 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useStoreEntradas } from 'src/stores/storeEntradas';
 import NavBar from 'src/components/NavBar.vue'
 
 defineOptions({
   name: 'MainLayout'
 })
+
+const storeEntradas = useStoreEntradas()
 
 const navBar = [
   {
