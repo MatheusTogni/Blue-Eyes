@@ -42,10 +42,12 @@
 <script setup>
 import { useQuasar } from "quasar";
 import { useStoreEntradas } from "src/stores/storeEntradas";
+import { useStoreConfiguracoes } from "src/stores/storeConfiguracoes";
 import { usoCifrao } from "src/uso/usoCifrao"
 import { usoQuantidadeClasseCor } from "src/uso/usoQuantidadeClasseCor";
 
-const storeEntradas = useStoreEntradas()
+const storeEntradas = useStoreEntradas(),
+    storeConfiguracoes = useStoreConfiguracoes()
 const $q = useQuasar()
 
 const props = defineProps({
@@ -61,6 +63,12 @@ const onLeft = ({ reset }) => {
 }
 
 const onRight = ({ reset }) => {
+    if (storeConfiguracoes.configuracoes.promptParaDeletar) promptParaDeletar
+        (reset)
+    else storeEntradas.deletarEntrada(props.entrada.id)
+}
+
+const promptParaDeletar = reset => {
     $q.dialog({
         title: 'Deletar Entrada',
         message: `Você gostaria de deletar essa entrada?
