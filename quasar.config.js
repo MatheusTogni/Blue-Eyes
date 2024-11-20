@@ -20,7 +20,6 @@ module.exports = configure(function (/* ctx */) {
       },
       vueRouterMode: "hash",
 
-      // Adicionar configuração para garantir que MIME Types estejam corretos
       extendViteConf(viteConf) {
         viteConf.server = viteConf.server || {};
         viteConf.server.mimeTypes = {
@@ -30,9 +29,8 @@ module.exports = configure(function (/* ctx */) {
     },
 
     devServer: {
-      open: true, // opens browser window automatically
+      open: true, 
       before: (app) => {
-        // Middleware para corrigir tipo MIME
         app.use((req, res, next) => {
           if (req.url.endsWith(".js")) {
             res.setHeader("Content-Type", "application/javascript");

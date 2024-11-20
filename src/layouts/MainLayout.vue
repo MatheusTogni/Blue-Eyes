@@ -77,10 +77,25 @@ const navBar = [
     link: '/entries'
   },
   {
+    title: 'Afazeres',
+    icon: 'done_all',
+    link: '/settings'
+  },
+  {
+    title: 'Compras',
+    icon: 'shopping_cart',
+    link: '/settings'
+  },
+  {
+    title: 'Semana',
+    icon: 'calendar_month',
+    link: '/settings'
+  },
+  {
     title: 'Configurações',
     icon: 'settings',
     link: '/settings'
-  }
+  },
 ]
 
 const leftDrawerOpen = ref(false)
