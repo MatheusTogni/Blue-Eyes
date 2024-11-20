@@ -4,13 +4,18 @@ import api from "src/service/apiService.js";
 
 export const useStoreConfiguracoes = defineStore("configuracoes", () => {
   const configuracoes = reactive({
-    promptParaDeletar: true, // Valor inicial
+    entradas: {
+      promptParaDeletar: true, // Valor inicial para Entradas
+    },
+    todos: {
+      promptParaDeletar: true, // Valor inicial para Tarefas
+    },
   });
 
   const loadConfiguracoes = async () => {
     try {
       const response = await api.get("/configuracoes");
-      Object.assign(configuracoes, response.data); // Atualiza localmente com os dados da API
+      Object.assign(configuracoes, response.data); // Atualiza localmente
     } catch (error) {
       console.error("Erro ao carregar configurações:", error);
     }
@@ -18,14 +23,13 @@ export const useStoreConfiguracoes = defineStore("configuracoes", () => {
 
   const saveConfiguracoes = async () => {
     try {
-      // Atualiza a configuração no JSON Web Server
-      await api.put("/configuracoes", { ...configuracoes });
+      await api.put("/configuracoes", configuracoes);
     } catch (error) {
       console.error("Erro ao salvar configurações:", error);
     }
   };
 
-  // Sincroniza automaticamente as configurações sempre que elas mudarem
+  // Salva as configurações automaticamente ao alterar
   watch(
     configuracoes,
     async () => {

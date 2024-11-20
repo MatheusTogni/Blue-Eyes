@@ -1,15 +1,32 @@
 <template>
   <q-page>
     <div class="q-pa-md">
-      <q-list bordered padding>
-        <q-item-label header>Entradas</q-item-label>
-        <q-item tag="label" v-ripple>
+      <q-list bordered>
+        <q-item-label header>Configurações</q-item-label>
+
+        <!-- Configuração de Entradas -->
+        <q-item>
           <q-item-section>
-            <q-item-label>Prompt para Deletar</q-item-label>
+            <q-item-label>Prompt para Deletar Entradas</q-item-label>
           </q-item-section>
           <q-item-section side>
             <q-toggle 
-            v-model="storeConfiguracoes.configuracoes.promptParaDeletar"/>
+              v-model="storeConfiguracoes.configuracoes.entradas.promptParaDeletar" 
+              color="primary" 
+            />
+          </q-item-section>
+        </q-item>
+
+        <!-- Configuração de Tarefas -->
+        <q-item>
+          <q-item-section>
+            <q-item-label>Prompt para Deletar Tarefas</q-item-label>
+          </q-item-section>
+          <q-item-section side>
+            <q-toggle 
+              v-model="storeConfiguracoes.configuracoes.todos.promptParaDeletar" 
+              color="secondary" 
+            />
           </q-item-section>
         </q-item>
       </q-list>
@@ -18,8 +35,7 @@
 </template>
 
 <script setup>
-import { useStoreConfiguracoes } from 'src/stores/storeConfiguracoes';
+import { useStoreConfiguracoes } from "src/stores/storeConfiguracoes";
 
-
-const storeConfiguracoes = useStoreConfiguracoes()
+const storeConfiguracoes = useStoreConfiguracoes();
 </script>

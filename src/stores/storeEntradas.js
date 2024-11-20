@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import { ref, computed, reactive } from "vue";
-import { uid, Notify } from "quasar";
+import { uid, Notify, Dialog } from "quasar"; // Certifique-se de incluir Dialog
 import api from "src/service/apiService.js";
-
+import { useStoreConfiguracoes } from "src/stores/storeConfiguracoes"; // Importa configurações
 
 export const useStoreEntradas = defineStore("entradas", () => {
   const entradas = ref([]);
@@ -26,11 +26,15 @@ export const useStoreEntradas = defineStore("entradas", () => {
   const loadEntradas = async () => {
     try {
       const response = await api.get("/entradas");
-      entradas.value = response.data;
+      entradas.value = response.data.map((entrada) => ({
+        ...entrada,
+        pago: entrada.pago ?? false, // Garante que o campo pago exista
+      }));
     } catch (error) {
       console.error("Erro ao carregar entradas:", error);
     }
   };
+  
 
   const addEntrada = async (adicionarEntradaForm) => {
     const novaEntrada = Object.assign({}, adicionarEntradaForm, {
@@ -46,33 +50,76 @@ export const useStoreEntradas = defineStore("entradas", () => {
   };
 
   const deletarEntrada = async (entradaId) => {
-    try {
-      await api.delete(`/entradas/${entradaId}`);
-      const index = entradas.value.findIndex(
-        (entrada) => entrada.id === entradaId
-      );
-      if (index !== -1) entradas.value.splice(index, 1);
-      Notify.create({
-        message: "Entrada Deletada",
-        position: "top-right",
-        type: "positive",
+    const storeConfiguracoes = useStoreConfiguracoes(); // Acessa as configurações
+  
+    if (storeConfiguracoes.configuracoes.entradas.promptParaDeletar) {
+      Dialog.create({
+        title: "Deletar Entrada",
+        message: "Você tem certeza que deseja excluir esta entrada?",
+        cancel: true,
+        persistent: true,
+        ok: {
+          label: "Deletar", 
+          color: "negative", 
+        },
+        cancel: {
+          label: "Cancelar", 
+          color: "primary", 
+        },
+      }).onOk(async () => {
+        try {
+          await api.delete(`/entradas/${entradaId}`);
+          const index = entradas.value.findIndex(
+            (entrada) => entrada.id === entradaId
+          );
+          if (index !== -1) entradas.value.splice(index, 1);
+          Notify.create({
+            message: "Entrada Deletada",
+            position: "top-right",
+            type: "positive",
+          });
+        } catch (error) {
+          console.error("Erro ao deletar entrada:", error);
+        }
       });
-    } catch (error) {
-      console.error("Erro ao deletar entrada:", error);
+    } else {
+      try {
+        await api.delete(`/entradas/${entradaId}`);
+        const index = entradas.value.findIndex(
+          (entrada) => entrada.id === entradaId
+        );
+        if (index !== -1) entradas.value.splice(index, 1);
+        Notify.create({
+          message: "Entrada Deletada",
+          position: "top-right",
+          type: "positive",
+        });
+      } catch (error) {
+        console.error("Erro ao deletar entrada:", error);
+      }
     }
   };
+  
 
   const updateEntrada = async (entradaId, updates) => {
     try {
-      await api.put(`/entradas/${entradaId}`, updates);
-      const index = entradas.value.findIndex(
-        (entrada) => entrada.id === entradaId
-      );
-      if (index !== -1) Object.assign(entradas.value[index], updates);
+      // Atualiza a entrada no backend
+      const currentEntrada = entradas.value.find((entrada) => entrada.id === entradaId);
+      if (!currentEntrada) return;
+  
+      const updatedEntrada = { ...currentEntrada, ...updates };
+      await api.put(`/entradas/${entradaId}`, updatedEntrada);
+  
+      // Atualiza localmente
+      const index = entradas.value.findIndex((entrada) => entrada.id === entradaId);
+      if (index !== -1) {
+        entradas.value[index] = { ...entradas.value[index], ...updates };
+      }
     } catch (error) {
       console.error("Erro ao atualizar entrada:", error);
     }
   };
+  
 
   return {
     entradas,

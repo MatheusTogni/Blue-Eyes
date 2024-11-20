@@ -79,7 +79,7 @@ const navBar = [
   {
     title: 'Afazeres',
     icon: 'done_all',
-    link: '/settings'
+    link: '/todos'
   },
   {
     title: 'Compras',
