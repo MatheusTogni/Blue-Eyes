@@ -18,10 +18,22 @@ export const useStoreTodos = defineStore("todos", () => {
   };
 
   const addTodo = async (todoForm) => {
-    const novoTodo = Object.assign({}, todoForm, {
+    // Verifica se a descrição está preenchida
+    if (!todoForm.descricao || todoForm.descricao.trim() === "") {
+      Notify.create({
+        message: "A descrição da tarefa não pode estar vazia.",
+        type: "negative",
+        position: "top-right",
+      });
+      return;
+    }
+
+    const novoTodo = {
       id: uid(),
+      descricao: todoForm.descricao.trim(), // Remove espaços extras
       concluido: false,
-    });
+    };
+
     try {
       await api.post("/todos", novoTodo);
       todos.value.push(novoTodo);
@@ -33,9 +45,17 @@ export const useStoreTodos = defineStore("todos", () => {
   const updateTodo = async (todoId, updates) => {
     try {
       const currentTodo = todos.value.find((todo) => todo.id === todoId);
-      if (!currentTodo) return;
+      if (!currentTodo) {
+        console.error("Afazer não encontrado para atualização.");
+        return;
+      }
+
       const updatedTodo = { ...currentTodo, ...updates };
+
+      // Atualiza no servidor
       await api.put(`/todos/${todoId}`, updatedTodo);
+
+      // Atualiza localmente
       Object.assign(currentTodo, updatedTodo);
     } catch (error) {
       console.error("Erro ao atualizar afazer:", error);
@@ -47,6 +67,7 @@ export const useStoreTodos = defineStore("todos", () => {
       await api.delete(`/todos/${todoId}`);
       const index = todos.value.findIndex((todo) => todo.id === todoId);
       if (index !== -1) todos.value.splice(index, 1);
+
       Notify.create({
         message: "Afazer excluído",
         type: "positive",
@@ -58,8 +79,9 @@ export const useStoreTodos = defineStore("todos", () => {
   };
 
   const confirmDeleteTodo = async (todoId, reset) => {
-    const promptParaDeletar = storeConfiguracoes.configuracoes.todos.promptParaDeletar;
-  
+    const promptParaDeletar =
+      storeConfiguracoes.configuracoes.todos?.promptParaDeletar;
+
     if (promptParaDeletar) {
       Dialog.create({
         title: "Deletar Tarefa",
@@ -67,26 +89,25 @@ export const useStoreTodos = defineStore("todos", () => {
         cancel: true,
         persistent: true,
         ok: {
-          label: "Deletar", 
-          color: "negative", 
+          label: "Deletar",
+          color: "negative",
         },
         cancel: {
-          label: "Cancelar", 
-          color: "primary", 
+          label: "Cancelar",
+          color: "primary",
         },
       })
         .onOk(async () => {
-          await deleteTodo(todoId); 
+          await deleteTodo(todoId); // Exclui a tarefa
         })
         .onCancel(() => {
-          if (reset) reset(); 
+          if (reset) reset(); // Restaura estado visual ao cancelar
         });
     } else {
-      await deleteTodo(todoId); 
-      if (reset) reset(); 
+      await deleteTodo(todoId); // Exclui diretamente
+      if (reset) reset();
     }
   };
-  
 
   return {
     todos,

@@ -7,7 +7,7 @@
                     <q-item-label class="header-label">Afazeres Pendentes</q-item-label>
                     <transition-group name="fade" tag="div">
                         <div v-for="todo in pendentes" :key="todo.id"
-                            class="q-my-sm q-pa-sm bg-white todo-item shadow-2">
+                            class="q-my-sm  shadow-2">
                             <q-slide-item @right="({ reset }) => storeTodos.confirmDeleteTodo(todo.id, reset)"
                                 right-color="negative" class="rounded-borders">
                                 <template v-slot:right>
@@ -20,12 +20,22 @@
                                             color="green" keep-color />
                                     </q-item-section>
 
-                                    <q-item-section class="text-weight-bold text-primary">
-                                        {{ todo.descricao }}
+                                    <!-- Adicionando a funcionalidade de edição ao clicar no nome -->
+                                    <q-item-section>
+                                        <q-popup-edit @save="(value) => updateDescricao(todo, value)"
+                                            :model-value="todo.descricao" v-slot="scope" :offset="[16, 12]"
+                                            anchor="top left" auto-save buttons label-set="Ok"
+                                            label-cancel="Cancelar">
+                                            <q-input v-model="scope.value" placeholder="Editar tarefa" dense
+                                                autofocus />
+                                        </q-popup-edit>
+
+                                        <span class="text-weight-bold text-primary">
+                                            {{ todo.descricao }}
+                                        </span>
                                     </q-item-section>
                                 </q-item>
                             </q-slide-item>
-
                         </div>
                     </transition-group>
                 </div>
@@ -33,7 +43,7 @@
                     <q-item-label class="header-label">Afazeres Concluídos</q-item-label>
                     <transition-group name="fade" tag="div">
                         <div v-for="todo in concluidos" :key="todo.id"
-                            class="q-my-sm q-pa-sm bg-grey-3 todo-item shadow-1">
+                            class="q-my-sm shadow-1">
                             <q-slide-item @right="({ reset }) => storeTodos.confirmDeleteTodo(todo.id, reset)"
                                 right-color="negative" class="rounded-borders">
                                 <template v-slot:right>
@@ -46,13 +56,21 @@
                                             color="green" keep-color />
                                     </q-item-section>
 
-                                    <q-item-section class="text-weight-bold text-primary">
-                                        {{ todo.descricao }}
+                                    <q-item-section>
+                                        <q-popup-edit @save="(value) => updateDescricao(todo, value)"
+                                            :model-value="todo.descricao" v-slot="scope" :offset="[16, 12]"
+                                            anchor="top left" auto-save buttons label-set="Salvar"
+                                            label-cancel="Cancelar">
+                                            <q-input v-model="scope.value" placeholder="Editar tarefa" dense
+                                                autofocus />
+                                        </q-popup-edit>
+
+                                        <span class="text-weight-bold text-primary">
+                                            {{ todo.descricao }}
+                                        </span>
                                     </q-item-section>
                                 </q-item>
                             </q-slide-item>
-
-
                         </div>
                     </transition-group>
                 </div>
@@ -84,7 +102,7 @@ const toggleConcluido = (todo) => {
     storeTodos.updateTodo(todo.id, { concluido: todo.concluido });
 };
 
-const confirmDelete = (todoId) => {
-    storeTodos.confirmDeleteTodo(todoId);
+const updateDescricao = (todo, value) => {
+    storeTodos.updateTodo(todo.id, { descricao: value });
 };
 </script>
