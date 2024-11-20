@@ -1,11 +1,16 @@
 import { defineStore } from "pinia";
-import { reactive } from "vue";
+import { reactive, watch } from "vue";
+import { walk } from "vue/compiler-sfc";
 
 export const useStoreConfiguracoes = defineStore("configuracoes", () => {
   const configuracoes = reactive({
     promptParaDeletar: true
   })
 
-  return { configuracoes };
+  watch(configuracoes, () => {
+    saveConfiguracoes()
+  })
+
+  return { configuracoes, saveConfiguracoes };
 });
  
