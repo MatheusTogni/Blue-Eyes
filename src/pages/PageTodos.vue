@@ -6,8 +6,7 @@
                 <div v-if="pendentes.length" class="q-mb-lg">
                     <q-item-label class="header-label">Afazeres Pendentes</q-item-label>
                     <transition-group name="fade" tag="div">
-                        <div v-for="todo in pendentes" :key="todo.id"
-                            class="q-my-sm  shadow-2">
+                        <div v-for="todo in pendentes" :key="todo.id" class="q-my-sm  shadow-2">
                             <q-slide-item @right="({ reset }) => storeTodos.confirmDeleteTodo(todo.id, reset)"
                                 right-color="negative" class="rounded-borders">
                                 <template v-slot:right>
@@ -24,8 +23,7 @@
                                     <q-item-section>
                                         <q-popup-edit @save="(value) => updateDescricao(todo, value)"
                                             :model-value="todo.descricao" v-slot="scope" :offset="[16, 12]"
-                                            anchor="top left" auto-save buttons label-set="Ok"
-                                            label-cancel="Cancelar">
+                                            anchor="top left" auto-save buttons label-set="Ok" label-cancel="Cancelar">
                                             <q-input v-model="scope.value" placeholder="Editar tarefa" dense
                                                 autofocus />
                                         </q-popup-edit>
@@ -42,8 +40,7 @@
                 <div v-if="concluidos.length" class="q-mt-lg">
                     <q-item-label class="header-label">Afazeres Concluídos</q-item-label>
                     <transition-group name="fade" tag="div">
-                        <div v-for="todo in concluidos" :key="todo.id"
-                            class="q-my-sm shadow-1">
+                        <div v-for="todo in concluidos" :key="todo.id" class="q-my-sm shadow-1">
                             <q-slide-item @right="({ reset }) => storeTodos.confirmDeleteTodo(todo.id, reset)"
                                 right-color="negative" class="rounded-borders">
                                 <template v-slot:right>

@@ -3,23 +3,25 @@
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import { useStoreConfiguracoes } from 'src/stores/storeConfiguracoes';
-import { useStoreEntradas } from 'src/stores/storeEntradas';
-import { useStoreTodos } from './stores/storeTodos';
+import { onMounted } from "vue";
+import { useStoreConfiguracoes } from "src/stores/storeConfiguracoes";
+import { useStoreEntradas } from "src/stores/storeEntradas";
+import { useStoreTodos } from "./stores/storeTodos";
+import { useStoreCompras } from "./stores/storeCompras"; // Importa o store de compras
 
 defineOptions({
-  name: 'App'
+  name: "App",
 });
 
 const storeEntradas = useStoreEntradas(),
   storeConfiguracoes = useStoreConfiguracoes(),
-  storeTodos = useStoreTodos()
+  storeTodos = useStoreTodos(),
+  storeCompras = useStoreCompras(); // Adiciona o store de compras
 
 onMounted(() => {
   storeEntradas.loadEntradas();
   storeConfiguracoes.loadConfiguracoes();
   storeTodos.loadTodos();
+  storeCompras.loadCompras(); // Carrega as compras
 });
-
 </script>

@@ -34,24 +34,34 @@ export const useStoreEntradas = defineStore("entradas", () => {
       console.error("Erro ao carregar entradas:", error);
     }
   };
-  
 
-  const addEntrada = async (adicionarEntradaForm) => {
-    const novaEntrada = Object.assign({}, adicionarEntradaForm, {
-      id: uid(),
-      pago: false,
-    });
+  const addEntrada = async (novaEntrada) => {
     try {
-      await api.post("/entradas", novaEntrada);
-      entradas.value.push(novaEntrada);
+      const entrada = {
+        id: uid(),
+        nome: novaEntrada.nome?.trim() || "Compras", // Usa a descrição ou um padrão
+        quantidade: novaEntrada.quantidade || 0,
+        pago: novaEntrada.pago ?? false,
+      };
+  
+      await api.post("/entradas", entrada);
+  
+      entradas.value.push(entrada);
+
     } catch (error) {
       console.error("Erro ao adicionar entrada:", error);
+      Notify.create({
+        message: "Erro ao adicionar entrada. Tente novamente.",
+        type: "negative",
+        position: "top-right",
+      });
     }
   };
-
+  
+  
   const deletarEntrada = async (entradaId) => {
     const storeConfiguracoes = useStoreConfiguracoes(); // Acessa as configurações
-  
+
     if (storeConfiguracoes.configuracoes.entradas.promptParaDeletar) {
       Dialog.create({
         title: "Deletar Entrada",
@@ -59,12 +69,12 @@ export const useStoreEntradas = defineStore("entradas", () => {
         cancel: true,
         persistent: true,
         ok: {
-          label: "Deletar", 
-          color: "negative", 
+          label: "Deletar",
+          color: "negative",
         },
         cancel: {
-          label: "Cancelar", 
-          color: "primary", 
+          label: "Cancelar",
+          color: "primary",
         },
       }).onOk(async () => {
         try {
@@ -99,19 +109,22 @@ export const useStoreEntradas = defineStore("entradas", () => {
       }
     }
   };
-  
 
   const updateEntrada = async (entradaId, updates) => {
     try {
       // Atualiza a entrada no backend
-      const currentEntrada = entradas.value.find((entrada) => entrada.id === entradaId);
+      const currentEntrada = entradas.value.find(
+        (entrada) => entrada.id === entradaId
+      );
       if (!currentEntrada) return;
-  
+
       const updatedEntrada = { ...currentEntrada, ...updates };
       await api.put(`/entradas/${entradaId}`, updatedEntrada);
-  
+
       // Atualiza localmente
-      const index = entradas.value.findIndex((entrada) => entrada.id === entradaId);
+      const index = entradas.value.findIndex(
+        (entrada) => entrada.id === entradaId
+      );
       if (index !== -1) {
         entradas.value[index] = { ...entradas.value[index], ...updates };
       }
@@ -119,7 +132,6 @@ export const useStoreEntradas = defineStore("entradas", () => {
       console.error("Erro ao atualizar entrada:", error);
     }
   };
-  
 
   return {
     entradas,

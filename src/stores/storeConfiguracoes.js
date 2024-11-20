@@ -3,14 +3,19 @@ import { reactive, watch } from "vue";
 import api from "src/service/apiService.js";
 
 export const useStoreConfiguracoes = defineStore("configuracoes", () => {
+  
   const configuracoes = reactive({
     entradas: {
-      promptParaDeletar: true, // Valor inicial para Entradas
+      promptParaDeletar: true,
     },
     todos: {
-      promptParaDeletar: true, // Valor inicial para Tarefas
+      promptParaDeletar: true,
+    },
+    compras: {
+      promptParaDeletar: true, // Adiciona esta linha
     },
   });
+  
 
   const loadConfiguracoes = async () => {
     try {

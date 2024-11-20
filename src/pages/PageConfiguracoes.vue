@@ -10,10 +10,7 @@
             <q-item-label>Prompt para Deletar Entradas</q-item-label>
           </q-item-section>
           <q-item-section side>
-            <q-toggle 
-              v-model="storeConfiguracoes.configuracoes.entradas.promptParaDeletar" 
-              color="primary" 
-            />
+            <q-toggle v-model="storeConfiguracoes.configuracoes.entradas.promptParaDeletar" color="primary" />
           </q-item-section>
         </q-item>
 
@@ -23,12 +20,19 @@
             <q-item-label>Prompt para Deletar Tarefas</q-item-label>
           </q-item-section>
           <q-item-section side>
-            <q-toggle 
-              v-model="storeConfiguracoes.configuracoes.todos.promptParaDeletar" 
-              color="secondary" 
-            />
+            <q-toggle v-model="storeConfiguracoes.configuracoes.todos.promptParaDeletar" color="secondary" />
           </q-item-section>
         </q-item>
+
+        <q-item>
+          <q-item-section>
+            <q-item-label>Prompt para Deletar Compras</q-item-label>
+          </q-item-section>
+          <q-item-section side>
+            <q-toggle v-model="storeConfiguracoes.configuracoes.compras.promptParaDeletar" />
+          </q-item-section>
+        </q-item>
+
       </q-list>
     </div>
   </q-page>

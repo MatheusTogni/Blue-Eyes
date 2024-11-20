@@ -84,7 +84,7 @@ const navBar = [
   {
     title: 'Compras',
     icon: 'shopping_cart',
-    link: '/settings'
+    link: '/shopping'
   },
   {
     title: 'Semana',
