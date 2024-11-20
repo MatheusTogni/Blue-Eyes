@@ -1,18 +1,15 @@
 import { defineStore } from "pinia";
 import { ref, computed, reactive } from "vue";
 import { uid, Notify } from "quasar";
+import api from "src/service/apiService.js";
+
 
 export const useStoreEntradas = defineStore("entradas", () => {
-  const entradas = ref([
-    { id: "id1", nome: "Salário", quantidade: 3000, pago: false },
-    { id: "id2", nome: "Aluguel", quantidade: -499, pago: false },
-    { id: "id3", nome: "Celular", quantidade: -250, pago: false },
-    { id: "id4", nome: "Desconhecido", quantidade: 0, pago: false },
-  ]);
+  const entradas = ref([]);
 
   const opcoes = reactive({
-    sort: false
-  })
+    sort: false,
+  });
 
   const total = computed(() => {
     return entradas.value.reduce((accumulator, { quantidade }) => {
@@ -22,41 +19,69 @@ export const useStoreEntradas = defineStore("entradas", () => {
 
   const totalPago = computed(() => {
     return entradas.value.reduce((accumulator, { quantidade, pago }) => {
-      return pago ? accumulator + quantidade : accumulator
+      return pago ? accumulator + quantidade : accumulator;
     }, 0);
   });
 
-  const addEntrada = (adicionarEntradaForm) => {
-    const novaEntrada = Object.assign({}, adicionarEntradaForm, { id: uid(), pago: false });
-    entradas.value.push(novaEntrada);
+  const loadEntradas = async () => {
+    try {
+      const response = await api.get("/entradas");
+      entradas.value = response.data;
+    } catch (error) {
+      console.error("Erro ao carregar entradas:", error);
+    }
   };
 
-  const deletarEntrada = (entradaId) => {
-    const index = entradas.value.findIndex(
-      (entrada) => entrada.id === entradaId
-    );
-    if (index !== -1) {
-      entradas.value.splice(index, 1);
+  const addEntrada = async (adicionarEntradaForm) => {
+    const novaEntrada = Object.assign({}, adicionarEntradaForm, {
+      id: uid(),
+      pago: false,
+    });
+    try {
+      await api.post("/entradas", novaEntrada);
+      entradas.value.push(novaEntrada);
+    } catch (error) {
+      console.error("Erro ao adicionar entrada:", error);
+    }
+  };
+
+  const deletarEntrada = async (entradaId) => {
+    try {
+      await api.delete(`/entradas/${entradaId}`);
+      const index = entradas.value.findIndex(
+        (entrada) => entrada.id === entradaId
+      );
+      if (index !== -1) entradas.value.splice(index, 1);
       Notify.create({
         message: "Entrada Deletada",
         position: "top-right",
         type: "positive",
       });
+    } catch (error) {
+      console.error("Erro ao deletar entrada:", error);
     }
   };
 
-  const updateEntrada = (entradaId, updates) => {
-    const index = entradas.value.findIndex(
-      (entrada) => entrada.id === 
-    entradaId)
-    Object.assign(entradas.value[index], updates);
+  const updateEntrada = async (entradaId, updates) => {
+    try {
+      await api.put(`/entradas/${entradaId}`, updates);
+      const index = entradas.value.findIndex(
+        (entrada) => entrada.id === entradaId
+      );
+      if (index !== -1) Object.assign(entradas.value[index], updates);
+    } catch (error) {
+      console.error("Erro ao atualizar entrada:", error);
+    }
   };
 
-  const sortEnd = ({ velhoIndex, novoIndex}) => {
-    const entradaMovida = entradas.value[velhoIndex]
-    entradas.value.splice(velhoIndex, 1)
-    entradas.value.splice(novoIndex, 0, entradaMovida)
-  }
-
-  return { entradas, opcoes, total, totalPago, addEntrada, deletarEntrada, updateEntrada, sortEnd };
+  return {
+    entradas,
+    opcoes,
+    total,
+    totalPago,
+    loadEntradas,
+    addEntrada,
+    deletarEntrada,
+    updateEntrada,
+  };
 });

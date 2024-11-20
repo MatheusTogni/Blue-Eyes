@@ -1,5 +1,5 @@
 <template>
-    <q-slide-item @left="onLeft" @right="onRight" left-color="positive" right-color="negative"
+    <q-slide-item @left="onLeft" @right="onRight" left-color="positive" right-color="negative" :id="`id-${ entrada.id }`"
         :class="{ 'bg-grey-2 ': entrada.pago }">
 
         <template v-slot:left>

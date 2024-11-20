@@ -1,0 +1,25 @@
+{
+  "entradas": [
+    {
+      "id": "id3",
+      "nome": "Celular",
+      "quantidade": -250,
+      "pago": false
+    },
+    {
+      "id": "id4",
+      "nome": "Desconhecido",
+      "quantidade": 0,
+      "pago": false
+    },
+    {
+      "id": "bc84b9de-915a-4fa8-a7f0-52a6df167798",
+      "nome": "teste1",
+      "quantidade": 1123,
+      "pago": false
+    }
+  ],
+  "configuracoes": {
+    "promptParaDeletar": false
+  }
+}
