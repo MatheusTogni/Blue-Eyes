@@ -1,14 +1,15 @@
 {
   "configuracoes": {
     "entradas": {
-      "promptParaDeletar": false
+      "promptParaDeletar": true
     },
     "todos": {
-      "promptParaDeletar": false
+      "promptParaDeletar": true
     },
     "compras": {
-      "promptParaDeletar": false
-    }
+      "promptParaDeletar": true
+    },
+    "metaGastos": 1000
   },
   "eventos": [
     {
@@ -59,12 +60,12 @@
     {
       "id": "519b7d42-ff99-4d0f-ab8d-0d8538a4659c",
       "descricao": "testeeeeea",
-      "concluido": true
+      "concluido": false
     },
     {
       "id": "25421616-0d37-4992-9fc7-7146b6e60d77",
       "descricao": "testeee",
-      "concluido": false
+      "concluido": true
     },
     {
       "id": "ba38ef8a-381d-4b7f-a902-6aafb6fd3d26",
@@ -77,7 +78,13 @@
       "concluido": false
     }
   ],
-  "compras": [],
+  "compras": [
+    {
+      "id": "ef71b9af-9306-4a09-afd0-c01f7af0eb23",
+      "descricao": "teste",
+      "valor": 123
+    }
+  ],
   "semana": {
     "Domingo": [],
     "Segunda": [],

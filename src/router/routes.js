@@ -3,7 +3,11 @@ const routes = [
     path: "/",
     component: () => import("layouts/MainLayout.vue"),
     children: [
-      { path: "", redirect: "/entries" }, // Redireciona '/' para '/entries'
+      { path: "", redirect: "/dashboard" }, // Redireciona '/' para '/dashboard'
+      {
+        path: "dashboard",
+        component: () => import("src/pages/PageDashboard.vue"), // Página de Dashboard
+      },
       {
         path: "entries",
         component: () => import("src/pages/PageEntradas.vue"), // Página de gastos

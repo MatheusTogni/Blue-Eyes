@@ -36,7 +36,7 @@
             </q-list>
           </q-card-section>
           <q-card-section v-else>
-            <div class="text-body2 text-grey">Nenhum evento neste dia.</div>
+            <div class="text-body2 text-white">Nenhum evento neste dia.</div>
           </q-card-section>
         </q-card>
       </div>
@@ -184,15 +184,16 @@
 
   <style scoped>
   .day-card {
+
     width: 13%;
     min-width: 160px;
     height: 250px; /* Define altura maior */
     text-align: center;
     cursor: pointer;
-    border: 1px solid #e0e0e0;
+    border: 2px solid #000000;
     border-radius: 12px;
     padding: 16px;
-    background-color: #306c88;
+    background-color: #5c9fbe;
     transition: all 0.2s;
   }
 

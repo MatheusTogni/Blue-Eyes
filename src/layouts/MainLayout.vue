@@ -2,54 +2,29 @@
   <q-layout view="hHh lpR lFf">
     <q-header elevated>
       <q-toolbar>
-        <q-btn
-          flat
-          dense
-          round
-          icon="menu"
-          aria-label="Menu"
-          @click="toggleLeftDrawer"
-        />
+        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
 
         <q-toolbar-title>
-        <div class="absolute-center">
-        <q-icon name="fa-solid fa-dragon"/>
-          Blue Eyes
-        </div>
+          <div class="absolute-center" @click="goToDashboard" style="cursor: pointer">
+            <q-icon name="fa-solid fa-dragon" />
+            Blue Eyes
+          </div>
         </q-toolbar-title>
-      
-        <q-btn 
-        v-if="$route.fullPath === '/entries'"
-        @click="storeEntradas.opcoes.sort = !storeEntradas.opcoes.sort"
-        :label="!storeEntradas.opcoes.sort ? 'Organizar' : 'Feito'"
-        flat
-        dense
-        />
+
+
+        <q-btn v-if="$route.fullPath === '/entries'" @click="storeEntradas.opcoes.sort = !storeEntradas.opcoes.sort"
+          :label="!storeEntradas.opcoes.sort ? 'Organizar' : 'Feito'" flat dense />
 
       </q-toolbar>
     </q-header>
 
-    <q-drawer
-      v-model="leftDrawerOpen"
-      class="bg-primary"
-      show-if-above
-      bordered
-      :width="200"
-      :breakpoint="767"
-    >
+    <q-drawer v-model="leftDrawerOpen" class="bg-primary" show-if-above bordered :width="200" :breakpoint="767">
       <q-list>
-        <q-item-label
-        class="text-white"
-          header
-        >
+        <q-item-label class="text-white" header>
           Opções de Navegação
         </q-item-label>
 
-        <NavBar
-          v-for="link in navBar"
-          :key="link.title"
-          v-bind="link"
-        />
+        <NavBar v-for="link in navBar" :key="link.title" v-bind="link" />
       </q-list>
     </q-drawer>
 
@@ -60,6 +35,7 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
 import { ref } from 'vue'
 import { useStoreEntradas } from 'src/stores/storeEntradas';
 import NavBar from 'src/components/NavBar.vue'
@@ -67,6 +43,12 @@ import NavBar from 'src/components/NavBar.vue'
 defineOptions({
   name: 'MainLayout'
 })
+
+const router = useRouter();
+
+function goToDashboard() {
+  router.push("/dashboard");
+}
 
 const storeEntradas = useStoreEntradas()
 
@@ -100,7 +82,7 @@ const navBar = [
 
 const leftDrawerOpen = ref(false)
 
-function toggleLeftDrawer () {
+function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 </script>
