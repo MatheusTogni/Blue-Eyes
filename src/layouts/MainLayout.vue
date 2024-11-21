@@ -89,7 +89,7 @@ const navBar = [
   {
     title: 'Semana',
     icon: 'calendar_month',
-    link: '/settings'
+    link: '/week'
   },
   {
     title: 'Configurações',

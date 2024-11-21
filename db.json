@@ -10,101 +10,48 @@
       "promptParaDeletar": false
     }
   },
+  "eventos": [
+    {
+      "dia": "Segunda",
+      "descricao": "Reunião semanal12312",
+      "id": "1"
+    },
+    {
+      "id": "72e4",
+      "dia": "Terça",
+      "descricao": "teswte"
+    },
+    {
+      "id": "df63",
+      "dia": "Terça",
+      "descricao": "teste2"
+    },
+    {
+      "id": "babb",
+      "dia": "Domingo",
+      "descricao": "teste"
+    },
+    {
+      "id": "f743",
+      "dia": "Quarta",
+      "descricao": "dia de hoje"
+    },
+    {
+      "id": "8e6a",
+      "dia": "Segunda",
+      "descricao": "teste"
+    },
+    {
+      "id": "fa3a",
+      "dia": "Sexta",
+      "descricao": "teste"
+    }
+  ],
   "entradas": [
-    {
-      "id": "7c6822d7-b553-4bdb-85cd-87f3fc4697f3",
-      "nome": "teste",
-      "quantidade": 131233,
-      "pago": false
-    },
-    {
-      "id": "9affd8e3-1bf6-43d1-b633-18289b668d58",
-      "nome": "teste",
-      "quantidade": 123,
-      "pago": false
-    },
-    {
-      "id": "e21ac31e-334a-4851-aa31-e23d52401bc0",
-      "nome": "Sem descrição",
-      "quantidade": -123,
-      "pago": false
-    },
-    {
-      "id": "693bba3b-b7ee-4a10-8b62-aabf8bec5610",
-      "nome": "teste",
-      "quantidade": 123,
-      "pago": false
-    },
-    {
-      "id": "ba955dc6-af79-429a-91ea-5b8c4cd5bc9f",
-      "nome": "Compras Finalizadas",
-      "quantidade": -123,
-      "pago": false
-    },
-    {
-      "id": "4bde7dda-2f80-4176-9587-7edaa330e101",
-      "nome": "teste",
-      "quantidade": 123,
-      "pago": false
-    },
-    {
-      "id": "9d019521-f4de-45be-993f-cf79b97d7839",
-      "nome": "Compras Finalizadas",
-      "quantidade": -246,
-      "pago": false
-    },
-    {
-      "id": "8b68d586-20c3-41df-a090-dfb59c3cd6ed",
-      "nome": "Compras Finalizadas",
-      "quantidade": -123,
-      "pago": false
-    },
-    {
-      "id": "ff51e8c8-48cb-4c04-9e98-d98a4ae5dd83",
-      "nome": "teste",
-      "quantidade": 123,
-      "pago": false
-    },
-    {
-      "id": "bb23db94-f445-4bbb-bb10-ff8e28ed946e",
-      "nome": "Sem descrição",
-      "quantidade": -123,
-      "pago": false
-    },
     {
       "id": "f0d33ac0-6df0-4388-a0f5-2d87c74354ba",
       "nome": "Compras",
       "quantidade": -123,
-      "pago": false
-    },
-    {
-      "id": "6f24c6b5-ea5f-4d5c-b36f-c293e4bbc8db",
-      "nome": "Compras",
-      "quantidade": -123,
-      "pago": false
-    },
-    {
-      "id": "72844677-e193-4d61-b3ca-b50adb3bc419",
-      "nome": "Compras",
-      "quantidade": -123,
-      "pago": false
-    },
-    {
-      "id": "af9417d2-9d2f-41ea-a02f-a08a519e324b",
-      "nome": "Compras",
-      "quantidade": 1231,
-      "pago": false
-    },
-    {
-      "id": "7d4a8d6d-d5cf-4f71-a7bf-7f913c386242",
-      "nome": "Compras",
-      "quantidade": -123,
-      "pago": false
-    },
-    {
-      "id": "39d03e4c-1622-4756-a336-010ec34655ca",
-      "nome": "Compras",
-      "quantidade": -69,
       "pago": false
     }
   ],
@@ -130,5 +77,14 @@
       "concluido": false
     }
   ],
-  "compras": []
+  "compras": [],
+  "semana": {
+    "Domingo": [],
+    "Segunda": [],
+    "Terça": [],
+    "Quarta": [],
+    "Quinta": [],
+    "Sexta": [],
+    "Sábado": []
+  }
 }
