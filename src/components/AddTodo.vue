@@ -27,15 +27,13 @@ const todoForm = reactive({
 
 const addTodoFormSubmit = () => {
   if (todoForm.descricao.trim() === "") {
-    return; // Evita adicionar tarefas vazias
+    return; 
   }
 
-  // Cria uma cópia do formulário para evitar referência direta
   const newTodo = { ...todoForm };
 
   storeTodos.addTodo(newTodo);
 
-  // Limpa o formulário após adicionar
   todoForm.descricao = "";
 };
 </script>

@@ -2,11 +2,11 @@ import { defineStore } from "pinia";
 import { ref } from "vue";
 import { uid, Notify, Dialog } from "quasar";
 import api from "src/service/apiService.js";
-import { useStoreConfiguracoes } from "./storeConfiguracoes"; // Importação do storeConfiguracoes
+import { useStoreConfiguracoes } from "./storeConfiguracoes"; 
 
 export const useStoreTodos = defineStore("todos", () => {
   const todos = ref([]);
-  const storeConfiguracoes = useStoreConfiguracoes(); // Acessa configurações globais
+  const storeConfiguracoes = useStoreConfiguracoes(); 
 
   const loadTodos = async () => {
     try {
@@ -18,7 +18,6 @@ export const useStoreTodos = defineStore("todos", () => {
   };
 
   const addTodo = async (todoForm) => {
-    // Verifica se a descrição está preenchida
     if (!todoForm.descricao || todoForm.descricao.trim() === "") {
       Notify.create({
         message: "A descrição da tarefa não pode estar vazia.",
@@ -30,7 +29,7 @@ export const useStoreTodos = defineStore("todos", () => {
 
     const novoTodo = {
       id: uid(),
-      descricao: todoForm.descricao.trim(), // Remove espaços extras
+      descricao: todoForm.descricao.trim(), 
       concluido: false,
     };
 
@@ -52,10 +51,8 @@ export const useStoreTodos = defineStore("todos", () => {
 
       const updatedTodo = { ...currentTodo, ...updates };
 
-      // Atualiza no servidor
       await api.put(`/todos/${todoId}`, updatedTodo);
 
-      // Atualiza localmente
       Object.assign(currentTodo, updatedTodo);
     } catch (error) {
       console.error("Erro ao atualizar afazer:", error);
@@ -98,13 +95,13 @@ export const useStoreTodos = defineStore("todos", () => {
         },
       })
         .onOk(async () => {
-          await deleteTodo(todoId); // Exclui a tarefa
+          await deleteTodo(todoId); 
         })
         .onCancel(() => {
-          if (reset) reset(); // Restaura estado visual ao cancelar
+          if (reset) reset(); 
         });
     } else {
-      await deleteTodo(todoId); // Exclui diretamente
+      await deleteTodo(todoId); 
       if (reset) reset();
     }
   };

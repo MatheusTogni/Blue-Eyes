@@ -58,12 +58,12 @@ const props = defineProps({
 .descricao {
   font-size: 1.2em;
   font-weight: bold;
-  color: #337FA3; /* Azul primário */
+  color: #337FA3; 
 }
 
 .valor {
   font-size: 1.2em;
   font-weight: bold;
-  color: #43a047; /* Verde primário */
+  color: #43a047; 
 }
 </style>

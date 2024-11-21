@@ -123,22 +123,18 @@ export const useStoreCompras = defineStore("compras", () => {
       return;
     }
   
-    // Cria o objeto da entrada com o total negativo
     const novaEntrada = {
       id: uid(),
-      nome: "Compras", // Descrição padrão
-      quantidade: -Math.abs(total), // Sempre garante que o valor será negativo
+      nome: "Compras", 
+      quantidade: -Math.abs(total), 
       pago: false,
     };
   
     try {
-      // Salva a entrada diretamente no backend
       await api.post("/entradas", novaEntrada);
   
-      // Atualiza localmente o store de entradas
       storeEntradas.entradas.push(novaEntrada);
   
-      // Limpa a lista de compras no backend e localmente
       for (const compra of compras.value) {
         await api.delete(`/compras/${compra.id}`);
       }

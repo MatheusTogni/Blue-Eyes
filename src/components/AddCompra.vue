@@ -35,7 +35,7 @@ const compraForm = reactive({
 
 const addCompraFormSubmit = () => {
   storeCompras.addCompra(compraForm);
-  compraForm.descricao = ""; // Limpa o formulário
-  compraForm.valor = null; // Limpa o valor
+  compraForm.descricao = ""; 
+  compraForm.valor = null; 
 };
 </script>

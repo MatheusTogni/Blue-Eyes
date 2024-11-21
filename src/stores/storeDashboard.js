@@ -10,9 +10,8 @@ export const useStoreDashboard = defineStore("dashboard", () => {
   const storeTodos = useStoreTodos();
   const storeSemana = useStoreSemana();
 
-  const metaGastos = ref(0); // Meta inicial (carregada do backend)
+  const metaGastos = ref(0); 
 
-  // Total de gastos da tela de entradas
   const totalGastos = computed(() => {
     return storeEntradas.entradas.reduce(
       (acc, entrada) => acc + entrada.quantidade,
@@ -20,7 +19,6 @@ export const useStoreDashboard = defineStore("dashboard", () => {
     );
   });
 
-  // Progresso dos gastos em relação à meta
   const progressoGastos = computed(() => {
     if (metaGastos.value > 0) {
       return (Math.abs(totalGastos.value) / metaGastos.value) * 100;
@@ -28,12 +26,10 @@ export const useStoreDashboard = defineStore("dashboard", () => {
     return 0;
   });  
 
-  // Tarefas prioritárias (primeiras 3 não concluídas)
   const tarefasPrioritarias = computed(() =>
     storeTodos.todos.filter((todo) => !todo.concluido).slice(0, 3)
   );
 
-  // Progresso das tarefas (percentual concluído)
   const totalTarefas = computed(() => storeTodos.todos.length);
   const tarefasConcluidas = computed(
     () => storeTodos.todos.filter((todo) => todo.concluido).length
@@ -45,7 +41,6 @@ export const useStoreDashboard = defineStore("dashboard", () => {
     return 0;
   });
 
-  // Eventos do dia
   const diaAtual = computed(() => {
     const diasSemana = [
       "Domingo",
@@ -62,7 +57,6 @@ export const useStoreDashboard = defineStore("dashboard", () => {
     () => storeSemana.eventosSemana[diaAtual.value] || []
   );
 
-  // Função para carregar a meta de gastos do backend
   const loadMetaGastos = async () => {
     try {
       const response = await api.get("/configuracoes");
@@ -72,16 +66,12 @@ export const useStoreDashboard = defineStore("dashboard", () => {
     }
   };
   
-
-  // Função para salvar a meta de gastos no backend
   const saveMetaGastos = async (novaMeta) => {
     try {
-      // Atualiza a meta localmente
       metaGastos.value = novaMeta;
   
-      // Atualiza a configuração no backend
       await api.put("/configuracoes", {
-        metaGastos: novaMeta, // Atualiza a meta
+        metaGastos: novaMeta, 
       });
   
       console.log("Meta de gastos salva com sucesso no backend!");
@@ -91,9 +81,6 @@ export const useStoreDashboard = defineStore("dashboard", () => {
     }
   };
   
-  
-  
-
   return {
     metaGastos,
     totalGastos,

@@ -1,11 +1,11 @@
 const routes = [
   {
     path: "/login",
-    component: () => import("src/pages/PageLogin.vue"), // Página de Login (sem layout)
+    component: () => import("src/pages/PageLogin.vue"), 
   },
   {
     path: "/",
-    component: () => import("layouts/MainLayout.vue"), // Usa o layout para as demais páginas
+    component: () => import("layouts/MainLayout.vue"), 
     children: [
       { path: "", redirect: "/dashboard" },
       {

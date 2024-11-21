@@ -4,7 +4,6 @@
       <q-list bordered>
         <q-item-label header>Configurações</q-item-label>
 
-        <!-- Configuração de Entradas -->
         <q-item>
           <q-item-section>
             <q-item-label>Prompt para Deletar Entradas</q-item-label>
@@ -14,7 +13,6 @@
           </q-item-section>
         </q-item>
 
-        <!-- Configuração de Tarefas -->
         <q-item>
           <q-item-section>
             <q-item-label>Prompt para Deletar Tarefas</q-item-label>

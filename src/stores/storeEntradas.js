@@ -1,8 +1,8 @@
 import { defineStore } from "pinia";
 import { ref, computed, reactive } from "vue";
-import { uid, Notify, Dialog } from "quasar"; // Certifique-se de incluir Dialog
+import { uid, Notify, Dialog } from "quasar"; 
 import api from "src/service/apiService.js";
-import { useStoreConfiguracoes } from "src/stores/storeConfiguracoes"; // Importa configurações
+import { useStoreConfiguracoes } from "src/stores/storeConfiguracoes"; 
 
 export const useStoreEntradas = defineStore("entradas", () => {
   const entradas = ref([]);
@@ -28,7 +28,7 @@ export const useStoreEntradas = defineStore("entradas", () => {
       const response = await api.get("/entradas");
       entradas.value = response.data.map((entrada) => ({
         ...entrada,
-        pago: entrada.pago ?? false, // Garante que o campo pago exista
+        pago: entrada.pago ?? false, 
       }));
     } catch (error) {
       console.error("Erro ao carregar entradas:", error);
@@ -39,7 +39,7 @@ export const useStoreEntradas = defineStore("entradas", () => {
     try {
       const entrada = {
         id: uid(),
-        nome: novaEntrada.nome?.trim() || "Compras", // Usa a descrição ou um padrão
+        nome: novaEntrada.nome?.trim() || "Compras", 
         quantidade: novaEntrada.quantidade || 0,
         pago: novaEntrada.pago ?? false,
       };
@@ -60,7 +60,7 @@ export const useStoreEntradas = defineStore("entradas", () => {
   
   
   const deletarEntrada = async (entradaId) => {
-    const storeConfiguracoes = useStoreConfiguracoes(); // Acessa as configurações
+    const storeConfiguracoes = useStoreConfiguracoes(); 
 
     if (storeConfiguracoes.configuracoes.entradas.promptParaDeletar) {
       Dialog.create({
@@ -112,7 +112,6 @@ export const useStoreEntradas = defineStore("entradas", () => {
 
   const updateEntrada = async (entradaId, updates) => {
     try {
-      // Atualiza a entrada no backend
       const currentEntrada = entradas.value.find(
         (entrada) => entrada.id === entradaId
       );
@@ -121,7 +120,6 @@ export const useStoreEntradas = defineStore("entradas", () => {
       const updatedEntrada = { ...currentEntrada, ...updates };
       await api.put(`/entradas/${entradaId}`, updatedEntrada);
 
-      // Atualiza localmente
       const index = entradas.value.findIndex(
         (entrada) => entrada.id === entradaId
       );

@@ -5,7 +5,6 @@ import api from "src/service/apiService.js";
 export const useStoreAuth = defineStore("auth", () => {
   const currentUser = ref(null);
 
-  // Função para registrar usuário
   const registerUser = async (username, password) => {
     try {
       const response = await api.get(`/usuarios?username=${username}`);
@@ -21,7 +20,6 @@ export const useStoreAuth = defineStore("auth", () => {
     }
   };
 
-  // Função para autenticar usuário
   const loginUser = async (username, password) => {
     try {
       const response = await api.get(
@@ -39,12 +37,10 @@ export const useStoreAuth = defineStore("auth", () => {
     }
   };
 
-  // Função para verificar autenticação
   const isAuthenticated = () => {
     return currentUser.value !== null;
   };
 
-  // Função para logout
   const logoutUser = () => {
     currentUser.value = null;
   };

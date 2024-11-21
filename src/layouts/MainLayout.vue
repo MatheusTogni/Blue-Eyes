@@ -24,7 +24,6 @@
 
         <NavBar v-for="link in navBar" :key="link.title" v-bind="link" />
 
-        <!-- Opção de Sair no Menu -->
         <q-item clickable v-ripple @click="logoutUser">
           <q-item-section avatar>
             <q-icon name="logout" color="white" />
@@ -96,8 +95,8 @@ function goToDashboard() {
 }
 
 function logoutUser() {
-  storeAuth.currentUser = null; // Limpa o usuário atual no storeAuth
-  router.push("/login"); // Redireciona para a tela de login
+  storeAuth.currentUser = null; 
+  router.push("/login"); 
 }
 </script>
 
@@ -107,6 +106,6 @@ function logoutUser() {
 }
 
 .logout-btn {
-  color: #e53935; /* Vermelho para destacar o botão de logout */
+  color: #e53935; 
 }
 </style>

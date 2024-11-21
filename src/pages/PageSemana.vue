@@ -1,7 +1,6 @@
 <template>
     <q-page padding>
       <div class="row justify-around q-gutter-md q-pa-md">
-        <!-- Renderiza os cards dos dias da semana -->
         <q-card
           v-for="day in days"
           :key="day.name"
@@ -22,7 +21,6 @@
               />
             </div>
           </q-card-section>
-          <!-- Lista de eventos -->
           <q-card-section v-if="storeSemana.eventosSemana[day.name]?.length">
             <q-list dense>
               <q-item
@@ -41,14 +39,12 @@
         </q-card>
       </div>
   
-      <!-- Dialogo para adicionar e listar eventos -->
       <q-dialog v-model="dialog">
         <q-card style="min-width: 450px">
           <q-card-section>
             <div class="text-h6 text-primary">Eventos de {{ selectedDay }}</div>
           </q-card-section>
   
-          <!-- Campo para adicionar novos eventos -->
           <q-card-section>
             <q-input
               v-model="newEvent"
@@ -66,7 +62,6 @@
             />
           </q-card-section>
   
-          <!-- Lista de eventos já cadastrados -->
           <q-card-section v-if="storeSemana.eventosSemana[selectedDay]?.length">
             <q-list dense bordered>
               <q-item
@@ -75,7 +70,6 @@
                 class="event-item"
                 bordered
               >
-                <!-- Campo para edição -->
                 <q-item-section>
                   <q-input
                     v-model="eventosEdicao[index]"
@@ -85,7 +79,6 @@
                   />
                 </q-item-section>
   
-                <!-- Botões de ação -->
                 <q-item-section side class="action-buttons">
                   <q-btn
                     flat
@@ -140,7 +133,6 @@
   
   const storeSemana = useStoreSemana();
   
-  // Abre o diálogo ao clicar no dia
   const openDay = (dayName) => {
     selectedDay.value = dayName;
     eventosEdicao.value = [...(storeSemana.eventosSemana[dayName] || [])];
@@ -148,15 +140,13 @@
     dialog.value = true;
   };
   
-  // Adiciona um novo evento
   const addEvent = async () => {
-    if (!newEvent.value.trim()) return; // Evita adicionar eventos vazios
+    if (!newEvent.value.trim()) return; 
     await storeSemana.addEvento(selectedDay.value, newEvent.value.trim());
-    eventosEdicao.value.push(newEvent.value.trim()); // Atualiza localmente
-    newEvent.value = ""; // Limpa o campo do evento
+    eventosEdicao.value.push(newEvent.value.trim()); 
+    newEvent.value = ""; 
   };
   
-  // Atualiza um evento
   const updateEvent = async (index, oldEvent) => {
     const newEvent = eventosEdicao.value[index]?.trim();
     if (newEvent && newEvent !== oldEvent) {
@@ -167,7 +157,7 @@
           newEvent
         );
         if (success) {
-          eventosEdicao.value[index] = newEvent; // Atualiza localmente
+          eventosEdicao.value[index] = newEvent; 
         }
       } catch (error) {
         console.error("Erro ao atualizar evento:", error);
@@ -175,7 +165,6 @@
     }
   };
   
-  // Exclui um evento
   const deleteEvent = async (event) => {
     await storeSemana.deleteEvento(selectedDay.value, event);
     eventosEdicao.value = eventosEdicao.value.filter((e) => e !== event);
@@ -187,7 +176,7 @@
 
     width: 13%;
     min-width: 160px;
-    height: 250px; /* Define altura maior */
+    height: 250px; 
     text-align: center;
     cursor: pointer;
     border: 2px solid #000000;

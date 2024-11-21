@@ -19,7 +19,6 @@
                                             color="green" keep-color />
                                     </q-item-section>
 
-                                    <!-- Adicionando a funcionalidade de edição ao clicar no nome -->
                                     <q-item-section>
                                         <q-popup-edit @save="(value) => updateDescricao(todo, value)"
                                             :model-value="todo.descricao" v-slot="scope" :offset="[16, 12]"

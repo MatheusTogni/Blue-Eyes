@@ -12,7 +12,7 @@ export const useStoreConfiguracoes = defineStore("configuracoes", () => {
       promptParaDeletar: true,
     },
     compras: {
-      promptParaDeletar: true, // Adiciona esta linha
+      promptParaDeletar: true, 
     },
   });
   
@@ -20,7 +20,7 @@ export const useStoreConfiguracoes = defineStore("configuracoes", () => {
   const loadConfiguracoes = async () => {
     try {
       const response = await api.get("/configuracoes");
-      Object.assign(configuracoes, response.data); // Atualiza localmente
+      Object.assign(configuracoes, response.data); 
     } catch (error) {
       console.error("Erro ao carregar configurações:", error);
     }
@@ -34,7 +34,6 @@ export const useStoreConfiguracoes = defineStore("configuracoes", () => {
     }
   };
 
-  // Salva as configurações automaticamente ao alterar
   watch(
     configuracoes,
     async () => {

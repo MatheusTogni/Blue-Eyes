@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { Notify } from "quasar"; // Adicione esta linha
+import { Notify } from "quasar"; 
 import api from "src/service/apiService.js";
 
 export const useStoreSemana = defineStore("semana", () => {
@@ -27,7 +27,6 @@ export const useStoreSemana = defineStore("semana", () => {
         Sábado: [],
       };
 
-      // Organiza os eventos por dia
       response.data.forEach((evento) => {
         if (eventosOrganizados[evento.dia]) {
           eventosOrganizados[evento.dia].push(evento.descricao);
@@ -45,10 +44,8 @@ export const useStoreSemana = defineStore("semana", () => {
 
     const novoEvento = { dia, descricao: eventoDescricao.trim() };
     try {
-      // Adiciona o evento como um item separado no JSON Server
       await api.post("/eventos", novoEvento);
 
-      // Atualiza localmente a lista de eventos
       if (!eventosSemana.value[dia]) {
         eventosSemana.value[dia] = [];
       }
@@ -60,16 +57,13 @@ export const useStoreSemana = defineStore("semana", () => {
 
   const updateEvento = async (dia, eventoAntigo, eventoNovo) => {
     try {
-      // Busca o evento correspondente no backend
       const response = await api.get(`/eventos?dia=${dia}&descricao=${eventoAntigo}`);
-      const evento = response.data[0]; // Obtém o primeiro evento correspondente
+      const evento = response.data[0]; 
   
       if (!evento) throw new Error("Evento não encontrado para atualização!");
   
-      // Atualiza o evento no backend
       await api.put(`/eventos/${evento.id}`, { dia, descricao: eventoNovo });
   
-      // Atualiza o evento localmente
       const eventos = eventosSemana.value[dia];
       const index = eventos.findIndex((e) => e === eventoAntigo);
       if (index !== -1) {
@@ -82,7 +76,7 @@ export const useStoreSemana = defineStore("semana", () => {
         position: "top-right",
       });
   
-      return true; // Indica sucesso
+      return true; 
     } catch (error) {
       console.error("Erro ao atualizar evento:", error);
   
@@ -92,29 +86,21 @@ export const useStoreSemana = defineStore("semana", () => {
         position: "top-right",
       });
   
-      return false; // Indica falha
+      return false; 
     }
   };
-  
-  
-  
-  
 
   const deleteEvento = async (dia, eventoDescricao) => {
     try {
-      // Busca o evento correspondente no backend
       const response = await api.get(`/eventos?dia=${dia}&descricao=${eventoDescricao}`);
-      const evento = response.data[0]; // Pega o primeiro evento correspondente
+      const evento = response.data[0]; 
   
       if (!evento) throw new Error("Evento não encontrado para exclusão!");
   
-      // Exclui o evento no backend
       await api.delete(`/eventos/${evento.id}`);
   
-      // Remove localmente
       eventosSemana.value[dia] = eventosSemana.value[dia].filter((e) => e !== eventoDescricao);
   
-      // Exibe notificação de sucesso
       Notify.create({
         message: "Evento excluído com sucesso!",
         type: "positive",

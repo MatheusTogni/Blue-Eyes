@@ -1,7 +1,6 @@
 <template>
     <q-page padding>
         <div class="row q-gutter-md q-py-md q-col-gutter-md justify-center">
-            <!-- Card 1: Soma Total dos Gastos -->
             <q-card class="dashboard-card" flat bordered>
                 <q-card-section>
                     <div class="text-h6 text-primary">Total de Gastos</div>
@@ -21,14 +20,12 @@
                 </q-card-section>
             </q-card>
 
-            <!-- Card 2: Tarefas Prioritárias -->
             <q-card class="dashboard-card tarefas-card" flat bordered>
-        <!-- Título do Card -->
+
         <q-card-section class="">
             <div class="text-h6 text-primary">Tarefas Prioritárias</div>
         </q-card-section>
 
-        <!-- Lista de Tarefas -->
         <q-card-section class="">
             <q-list dense>
                 <q-item
@@ -45,7 +42,6 @@
         </q-card-section>
     </q-card>
 
-            <!-- Card 3: Progresso das Tarefas -->
             <q-card class="dashboard-card" flat bordered>
                 <q-card-section>
                     <div class="text-h6 text-primary">Progresso das Tarefas</div>
@@ -59,7 +55,6 @@
                 </q-card-section>
             </q-card>
 
-            <!-- Card 4: Eventos do Dia -->
             <q-card class="dashboard-card" flat >
                 <q-card-section>
                     <div class="text-h6 text-primary">Eventos de Hoje ({{ storeDashboard.diaAtual }})</div>
@@ -77,7 +72,6 @@
             </q-card>
         </div>
 
-        <!-- Dialog para edição da meta -->
         <q-dialog v-model="editMeta">
             <q-card style="max-width: 400px">
                 <q-card-section>
@@ -136,7 +130,7 @@ storeDashboard.loadMetaGastos();
     text-align: center;
     border-radius: 12px;
     transition: all 0.3s;
-    border: 2px solid #027be3; /* Borda azul */
+    border: 2px solid #027be3; 
     background-color: #f9f9f9;
     box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1), -10px -10px 20px rgba(255, 255, 255, 0.8);
 }
