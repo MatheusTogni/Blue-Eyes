@@ -4,29 +4,29 @@
 
 <script setup>
 import { onMounted } from "vue";
-import { useStoreConfiguracoes } from "src/stores/storeConfiguracoes";
-import { useStoreEntradas } from "src/stores/storeEntradas";
+import { useStoreEntradas } from "./stores/storeEntradas";
 import { useStoreTodos } from "./stores/storeTodos";
-import { useStoreCompras } from "./stores/storeCompras"; // Importa o store de compras
-import { useStoreSemana } from "./stores/storeSemana"; // Importa o store de semana
-import { useStoreDashboard } from "./stores/storeDashboard"; // Importa o store de dashboard
+import { useStoreCompras } from "./stores/storeCompras";
+import { useStoreSemana } from "./stores/storeSemana";
+import { useStoreAuth } from "./stores/storeAuth";
+import { useRouter } from "vue-router";
 
-defineOptions({
-  name: "App",
-});
-
-const storeEntradas = useStoreEntradas(),
-  storeConfiguracoes = useStoreConfiguracoes(),
-  storeTodos = useStoreTodos(),
-  storeCompras = useStoreCompras(), // Adiciona o store de compras
-  storeSemana = useStoreSemana(), // Adiciona o store de semana
-  storeDashboard = useStoreDashboard(); // Adiciona o store de dashboard
+const storeEntradas = useStoreEntradas();
+const storeTodos = useStoreTodos();
+const storeCompras = useStoreCompras();
+const storeSemana = useStoreSemana();
+const storeAuth = useStoreAuth();
+const router = useRouter();
 
 onMounted(() => {
   storeEntradas.loadEntradas();
-  storeConfiguracoes.loadConfiguracoes();
   storeTodos.loadTodos();
-  storeCompras.loadCompras(); // Carrega as compras
-  storeSemana.loadEventos(); // Carrega os eventos da semana
+  storeCompras.loadCompras();
+  storeSemana.loadEventos();
+
+  if (!storeAuth.currentUser) {
+    router.push("/login");
+  }
 });
 </script>
+

@@ -1,4 +1,16 @@
 {
+  "usuarios": [
+    {
+      "id": "3bfd",
+      "username": "teste",
+      "password": "admin"
+    },
+    {
+      "id": "8ae0",
+      "username": "admin",
+      "password": "admin"
+    }
+  ],
   "configuracoes": {
     "entradas": {
       "promptParaDeletar": true
@@ -60,7 +72,7 @@
     {
       "id": "519b7d42-ff99-4d0f-ab8d-0d8538a4659c",
       "descricao": "testeeeeea",
-      "concluido": false
+      "concluido": true
     },
     {
       "id": "25421616-0d37-4992-9fc7-7146b6e60d77",

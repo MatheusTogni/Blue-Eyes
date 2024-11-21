@@ -1,32 +1,42 @@
 const routes = [
   {
+    path: "/login",
+    component: () => import("src/pages/PageLogin.vue"), // Página de Login (sem layout)
+  },
+  {
     path: "/",
-    component: () => import("layouts/MainLayout.vue"),
+    component: () => import("layouts/MainLayout.vue"), // Usa o layout para as demais páginas
     children: [
-      { path: "", redirect: "/dashboard" }, // Redireciona '/' para '/dashboard'
+      { path: "", redirect: "/dashboard" },
       {
         path: "dashboard",
-        component: () => import("src/pages/PageDashboard.vue"), // Página de Dashboard
+        component: () => import("src/pages/PageDashboard.vue"),
+        meta: { requiresAuth: true },
       },
       {
         path: "entries",
-        component: () => import("src/pages/PageEntradas.vue"), // Página de gastos
+        component: () => import("src/pages/PageEntradas.vue"),
+        meta: { requiresAuth: true },
       },
       {
         path: "todos",
-        component: () => import("src/pages/PageTodos.vue"), // Página de afazeres
+        component: () => import("src/pages/PageTodos.vue"),
+        meta: { requiresAuth: true },
       },
       {
         path: "shopping",
-        component: () => import("src/pages/PageCompras.vue"), // Página de compras
+        component: () => import("src/pages/PageCompras.vue"),
+        meta: { requiresAuth: true },
       },
       {
         path: "week",
-        component: () => import("src/pages/PageSemana.vue"), // Página de organização da semana
+        component: () => import("src/pages/PageSemana.vue"),
+        meta: { requiresAuth: true },
       },
       {
         path: "settings",
-        component: () => import("src/pages/PageConfiguracoes.vue"), // Configurações
+        component: () => import("src/pages/PageConfiguracoes.vue"),
+        meta: { requiresAuth: true },
       },
     ],
   },

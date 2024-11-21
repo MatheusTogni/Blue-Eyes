@@ -11,10 +11,8 @@
           </div>
         </q-toolbar-title>
 
-
         <q-btn v-if="$route.fullPath === '/entries'" @click="storeEntradas.opcoes.sort = !storeEntradas.opcoes.sort"
           :label="!storeEntradas.opcoes.sort ? 'Organizar' : 'Feito'" flat dense />
-
       </q-toolbar>
     </q-header>
 
@@ -25,6 +23,16 @@
         </q-item-label>
 
         <NavBar v-for="link in navBar" :key="link.title" v-bind="link" />
+
+        <!-- Opção de Sair no Menu -->
+        <q-item clickable v-ripple @click="logoutUser">
+          <q-item-section avatar>
+            <q-icon name="logout" color="white" />
+          </q-item-section>
+          <q-item-section>
+            <q-item-label style="color: white;">Sair</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -36,21 +44,18 @@
 
 <script setup>
 import { useRouter } from "vue-router";
-import { ref } from 'vue'
+import { ref } from 'vue';
+import { useStoreAuth } from "src/stores/storeAuth";
 import { useStoreEntradas } from 'src/stores/storeEntradas';
-import NavBar from 'src/components/NavBar.vue'
+import NavBar from 'src/components/NavBar.vue';
 
 defineOptions({
   name: 'MainLayout'
-})
+});
 
 const router = useRouter();
-
-function goToDashboard() {
-  router.push("/dashboard");
-}
-
-const storeEntradas = useStoreEntradas()
+const storeAuth = useStoreAuth();
+const storeEntradas = useStoreEntradas();
 
 const navBar = [
   {
@@ -78,11 +83,30 @@ const navBar = [
     icon: 'settings',
     link: '/settings'
   },
-]
+];
 
-const leftDrawerOpen = ref(false)
+const leftDrawerOpen = ref(false);
 
 function toggleLeftDrawer() {
-  leftDrawerOpen.value = !leftDrawerOpen.value
+  leftDrawerOpen.value = !leftDrawerOpen.value;
+}
+
+function goToDashboard() {
+  router.push("/dashboard");
+}
+
+function logoutUser() {
+  storeAuth.currentUser = null; // Limpa o usuário atual no storeAuth
+  router.push("/login"); // Redireciona para a tela de login
 }
 </script>
+
+<style scoped>
+.q-toolbar-title {
+  cursor: pointer;
+}
+
+.logout-btn {
+  color: #e53935; /* Vermelho para destacar o botão de logout */
+}
+</style>
